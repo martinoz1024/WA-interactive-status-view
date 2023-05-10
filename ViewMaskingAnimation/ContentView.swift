@@ -14,30 +14,32 @@ struct ContentView: View {
     @State var maskFrameHeight: CGFloat = 100.0
     @State var maskOpacity: CGFloat = 0.0
     
-    @StateObject var detailViewModel = DetailViewModel()
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
             ZStack(alignment: .center) {
                     VStack(alignment: .leading) {
-                        StatusCell(user: detailViewModel.users.first!, namespace: namespace, hidePicture: $detailViewModel.show)
+                        StatusCell(user: viewModel.users.first!, namespace: namespace, hidePicture: $viewModel.show)
                             .onTapGesture {
                                 withAnimation(.easeOut(duration: 1.0)){
-                                    detailViewModel.present()
+                                    viewModel.present()
                                 }
                             }
                         
-                        StatusCell(user: detailViewModel.users.last!, namespace: namespace, hidePicture: .constant(false))
+                        StatusCell(user: viewModel.users.last!, namespace: namespace, hidePicture: .constant(false))
                         }
                     
-        if detailViewModel.show{
+        if viewModel.show{
                     GeometryReader { geo in
-                        RectangleDetail(finalWidth: geo.size.width * 0.95, finalHeight: geo.size.height, namespace: namespace, user: detailViewModel.users.first!)
+                        RectangleDetail(finalWidth: geo.size.width * 0.95, finalHeight: geo.size.height, namespace: namespace, user: viewModel.users.first!, dismissAction: {
+                            viewModel.dismiss()
+                        })
                     }
                 }
             }
             .padding()
             
-            .environmentObject(detailViewModel)
+            .environmentObject(viewModel)
         
         
     }

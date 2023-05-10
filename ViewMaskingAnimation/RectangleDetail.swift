@@ -15,13 +15,12 @@ struct RectangleDetail: View{
     let namespace: Namespace.ID
     let user: User
     var animationDuration: CGFloat = 1.0
+    let dismissAction: (()->Void)?
     @State var maskFrameHeight: CGFloat = 150.0
     @State var maskOpacity: CGFloat = 1.0
     @State private var offset: CGSize = .zero
     
     @State var scale: CGFloat = 1
-    
-    @EnvironmentObject var viewModel: DetailViewModel
     
     
     var body: some View{
@@ -102,7 +101,7 @@ struct RectangleDetail: View{
     func onEnded(value: DragGesture.Value){
         withAnimation(.spring()){
             if scale < 0.9{
-                viewModel.dismiss()
+                dismissAction?()
                 return
             }
             scale = 1
@@ -121,10 +120,8 @@ extension View {
 
 struct rectanglePreview: PreviewProvider{
     @Namespace static var test
-    @StateObject static var detailViewModel = DetailViewModel()
     static var previews: some View {
-        RectangleDetail(finalWidth: 400, finalHeight: 800.0, namespace: test, user: User(name: "", imageName: "zebra"))
-            .environmentObject(detailViewModel)
+        RectangleDetail(finalWidth: 400, finalHeight: 800.0, namespace: test, user: User(name: "", imageName: "zebra"), dismissAction: nil)
     }
     
     
