@@ -13,7 +13,7 @@ struct StatusCell: View {
     
     let user: User
     let namespace: Namespace.ID
-    @Binding var hidePicture: Bool
+    var hidePicture: Bool
     
     
     var body: some View {

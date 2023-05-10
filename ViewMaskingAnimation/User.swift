@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Hashable{
+struct User: Hashable, Identifiable{
     let id: UUID = UUID()
     let name: String
     let imageName:  String

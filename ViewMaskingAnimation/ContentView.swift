@@ -19,19 +19,21 @@ struct ContentView: View {
     var body: some View {
             ZStack(alignment: .center) {
                     VStack(alignment: .leading) {
-                        StatusCell(user: viewModel.users.first!, namespace: namespace, hidePicture: $viewModel.show)
-                            .onTapGesture {
-                                withAnimation(.easeOut(duration: 1.0)){
-                                    viewModel.present()
+                        ForEach(viewModel.users) { user in
+                            StatusCell(user: user, namespace: namespace, hidePicture: viewModel.hidePreviewImage(user: user))
+                                .onTapGesture {
+                                    viewModel.selectUser(user: user)
+                                    withAnimation(.easeOut(duration: 1.0)){
+                                        viewModel.present()
+                                    }
                                 }
-                            }
                         
-                        StatusCell(user: viewModel.users.last!, namespace: namespace, hidePicture: .constant(false))
                         }
+                    }
                     
         if viewModel.show{
                     GeometryReader { geo in
-                        RectangleDetail(finalWidth: geo.size.width * 0.95, finalHeight: geo.size.height, namespace: namespace, user: viewModel.users.first!, dismissAction: {
+                        RectangleDetail(finalWidth: geo.size.width * 0.95, finalHeight: geo.size.height, namespace: namespace, user: viewModel.selectedUser!, dismissAction: {
                             viewModel.dismiss()
                         })
                     }
