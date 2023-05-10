@@ -15,6 +15,6 @@ struct User: Hashable{
 }
 
 extension User {
-    static var max = User(name: "Max Mustermann", imageName: "zebra")
-    static var lischen = User(name: "Lischen Müller", imageName: "blueberries", lastOnline: .seconds(7200))
+    static var maxPersona = User(name: "Max Mustermann", imageName: "zebra")
+    static var lieschenPersona = User(name: "Lieschen Müller", imageName: "blueberries", lastOnline: .seconds(7200))
 }

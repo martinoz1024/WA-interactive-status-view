@@ -15,7 +15,7 @@ extension ContentView {
         
         @Published var show = false
         
-        let users: [User] = [.max, .lischen]
+        let users: [User] = [.maxPersona, .lieschenPersona]
         
         func dismiss() {
             show = false
