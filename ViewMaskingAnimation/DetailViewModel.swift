@@ -14,7 +14,7 @@ class DetailViewModel: ObservableObject{
     
     @Published var show = false
     
-    let users: [User] = [User(name: "Max Muster", imageName: "zebra"), User(name: "Lischen Müller", imageName: "blueberries", lastOnline: .seconds(7200))]
+    let users: [User] = [.max, .lischen]
     
     func dismiss() {
         show = false

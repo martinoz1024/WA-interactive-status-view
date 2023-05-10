@@ -13,3 +13,8 @@ struct User: Hashable{
     let imageName:  String
     var lastOnline: Duration = .seconds(3600)
 }
+
+extension User {
+    static var max = User(name: "Max Mustermann", imageName: "zebra")
+    static var lischen = User(name: "Lischen Müller", imageName: "blueberries", lastOnline: .seconds(7200))
+}
