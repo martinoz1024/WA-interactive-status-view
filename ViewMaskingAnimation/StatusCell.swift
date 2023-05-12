@@ -14,15 +14,25 @@ struct StatusCell: View {
     let user: User
     let namespace: Namespace.ID
     var hidePicture: Bool
+    let circleRadius: CGFloat = 80
+    var borderColor: Color = .gray
+    
+    private var borderWith: CGFloat {
+        return circleRadius / 100 * 1.5
+    }
+    
+    private var borderRadius: CGFloat {
+        return circleRadius * 1.1
+    }
     
     
     var body: some View {
         HStack{
             ZStack{
                 Circle()
-                    .strokeBorder(.gray, lineWidth: 1.5)
+                    .strokeBorder(borderColor, lineWidth: borderWith)
                     .foregroundColor(.clear)
-                    .frame(width: 105, height: 105)
+                    .frame(width: borderRadius, height: borderRadius)
                     
                 if !hidePicture{
                     Image(user.imageName)
@@ -31,12 +41,12 @@ struct StatusCell: View {
                         .clipShape(
                             Circle())
                         .matchedGeometryEffect(id: user, in: namespace)
-                        .frame(width: 100, height: 100)
+                        .frame(width: circleRadius, height: circleRadius)
                 }
                 else{
                     Circle()
                         .foregroundColor(.clear)
-                        .frame(width: 100, height: 100)
+                        .frame(width: circleRadius, height: circleRadius)
                 }
             }
             VStack(alignment: .leading, spacing: 5, content: {
