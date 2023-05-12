@@ -18,18 +18,27 @@ struct ContentView: View {
     
     var body: some View {
             ZStack(alignment: .center) {
-                    VStack(alignment: .leading) {
-                        ForEach(viewModel.users) { user in
-                            StatusCell(user: user, namespace: namespace, hidePicture: viewModel.hidePreviewImage(user: user))
-                                .onTapGesture {
-                                    viewModel.selectUser(user: user)
-                                    withAnimation(.easeOut(duration: 1.0)){
-                                        viewModel.present()
-                                    }
-                                }
+                VStack (alignment: .leading) {
+                    Text("Status")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                         
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            ForEach(viewModel.users) { user in
+                                StatusCell(user: user, namespace: namespace, hidePicture: viewModel.hidePreviewImage(user: user))
+                                    .onTapGesture {
+                                        viewModel.selectUser(user: user)
+                                        withAnimation(.easeOut(duration: 1.0)){
+                                            viewModel.present()
+                                        }
+                                    }
+                                
+                            }
                         }
                     }
+                }
+                    
                     
         if viewModel.show{
                     GeometryReader { geo in
@@ -40,7 +49,6 @@ struct ContentView: View {
                 }
             }
             .padding()
-            
             .environmentObject(viewModel)
         
         
