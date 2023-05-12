@@ -1,5 +1,5 @@
 //
-//  RectangleDetail.swift
+//  StatusDetailView.swift
 //  ViewMaskingAnimation
 //
 //  Created by Martin on 05.05.23.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct RectangleDetail: View{
+struct StausDetailView: View{
     
     var finalWidth: CGFloat
     var finalHeight: CGFloat
@@ -118,10 +118,10 @@ extension View {
     }
 }
 
-struct rectanglePreview: PreviewProvider{
+struct statusPreview: PreviewProvider{
     @Namespace static var test
     static var previews: some View {
-        RectangleDetail(finalWidth: 400, finalHeight: 800.0, namespace: test, user: User(name: "", imageName: "zebra"), dismissAction: nil)
+        StausDetailView(finalWidth: 390, finalHeight: 800.0, namespace: test, user: User(name: "", imageName: "zebra"), dismissAction: nil)
     }
     
     

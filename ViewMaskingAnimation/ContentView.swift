@@ -42,7 +42,7 @@ struct ContentView: View {
                     
         if viewModel.show{
                     GeometryReader { geo in
-                        RectangleDetail(finalWidth: geo.size.width * 0.95, finalHeight: geo.size.height, namespace: namespace, user: viewModel.selectedUser!, dismissAction: {
+                        StausDetailView(finalWidth: geo.size.width * 0.95, finalHeight: geo.size.height, namespace: namespace, user: viewModel.selectedUser!, dismissAction: {
                             viewModel.dismiss()
                         })
                     }
