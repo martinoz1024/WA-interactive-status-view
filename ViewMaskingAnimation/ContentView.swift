@@ -29,7 +29,7 @@ struct ContentView: View {
                                 StatusCell(user: user, namespace: namespace, hidePicture: viewModel.hidePreviewImage(user: user))
                                     .onTapGesture {
                                         viewModel.selectUser(user: user)
-                                        withAnimation(.easeOut(duration: 1.0)){
+                                        withAnimation(.easeOut(duration: 0.5)){
                                             viewModel.present()
                                         }
                                     }
@@ -42,14 +42,15 @@ struct ContentView: View {
                     
         if viewModel.show{
                     GeometryReader { geo in
-                        StausDetailView(finalWidth: geo.size.width * 0.95, finalHeight: geo.size.height, namespace: namespace, user: viewModel.selectedUser!, dismissAction: {
+                        StausDetailView(finalWidth: geo.size.width, finalHeight: geo.size.height, namespace: namespace, user: viewModel.selectedUser!, dismissAction: {
                             viewModel.dismiss()
                         })
                     }
+                    .edgesIgnoringSafeArea(.all)
                 }
             }
-            .padding()
-            .environmentObject(viewModel)
+        
+            
         
         
     }

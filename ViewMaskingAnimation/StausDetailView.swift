@@ -14,7 +14,7 @@ struct StausDetailView: View{
     var finalHeight: CGFloat
     let namespace: Namespace.ID
     let user: User
-    var animationDuration: CGFloat = 1.0
+    var animationDuration: CGFloat = 0.2
     let dismissAction: (()->Void)?
     @State var maskFrameHeight: CGFloat = 150.0
     @State var maskOpacity: CGFloat = 1.0
@@ -24,38 +24,58 @@ struct StausDetailView: View{
     
     
     var body: some View{
-        GeometryReader { geo in
-            VStack(alignment: .center) {
-                Image(user.imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .cornerRadius(15)
-                    .offset(CGSize(width: offset.width * 0.5, height: offset.height * 0.5))
-                    .mask {
-                        if geo.size.width < finalWidth{
-                            Circle()
-                                .clipped()
-                                .opacity(maskOpacity)
-                        }
-                        else{
-                            Circle()
-                                .frame(width:  maskFrameHeight, height:   maskFrameHeight)
-                                .opacity(maskOpacity)
-                                .onAppear {
-                                    maskFrameHeight = finalHeight
-                                    //animate(maxheight: finalHeight * 1.2)
-                                }
-                        }
+        
+            GeometryReader { geo in
+                ZStack {
+                    Image(user.imageName)
+                        .resizable()
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.vertical)
+                    
+                    Rectangle()
+                        .background(
+                            Material.thin
+                        )
+                        .edgesIgnoringSafeArea(.vertical)
+                    VStack(alignment: .center) {
+                        Image(user.imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(15)
+                            .offset(CGSize(width: offset.width * 0.5, height: offset.height * 0.5))
+                        .matchedGeometryEffect(id: user, in: namespace)
+                            .frame(width: geo.size.width)
                     }
-                    .background(Color.clear)
-                    .matchedGeometryEffect(id: user, in: namespace)
-                    .frame(width: geo.size.width, height: geo.size.height)
+                }
+                .mask {
+                    
+                    /*if geo.size.width < finalWidth{
+                        Circle()
+                            .clipped()
+                            .opacity(maskOpacity)
+                    }*/
+                    if geo.size.width >= finalWidth{
+                        Circle()
+                            .frame(width:  maskFrameHeight, height:   maskFrameHeight)
+                            .opacity(maskOpacity)
+                            .onAppear {
+                                maskFrameHeight = finalHeight * 1.2
+                                //animate(maxheight: finalHeight * 1.2)
+                            }
+                    }
+                }
+                .background(Color.clear)
+                .scaleEffect(scale)
+                .offset(offset)
+                .frame(width: geo.size.width, height: geo.size.height)
+                
+                
             }
             
-        }
-        .scaleEffect(scale)
-        .offset(offset)
-        .gesture(DragGesture(minimumDistance: 0).onChanged(onChange(value:)).onEnded(onEnded(value:)))
+            .gesture(DragGesture(minimumDistance: 0).onChanged(onChange(value:)).onEnded(onEnded(value:)))
+            
+        
+        
         
     }
     
@@ -90,10 +110,10 @@ struct StausDetailView: View{
         
         let scale = value.translation.height / UIScreen.main.bounds.height * 0.66
         
-        if 1 - scale > 0.8{
+        if 1 - scale > 0.4{
             self.scale = 1 - scale
-            self.offset.width = value.translation.width / 10
-            self.offset.height = value.translation.height / 10
+            self.offset.width = value.translation.width / 5
+            self.offset.height = value.translation.height / 5
         }
         
     }
@@ -105,7 +125,7 @@ struct StausDetailView: View{
                 return
             }
             scale = 1
-            maskFrameHeight = finalHeight
+            maskFrameHeight = finalHeight * 1.2
             offset = .zero
             
         }
